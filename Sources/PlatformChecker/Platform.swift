@@ -8,7 +8,7 @@ import Foundation
 
 /// `Platform` provides a structured and intuitive way to access environment-specific checks 
 /// across different Apple platforms and configurations.
-struct Platform {}
+public struct Platform {}
 
 // MARK: - OS Types
 
