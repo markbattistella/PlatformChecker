@@ -90,4 +90,4 @@ Contributions are welcome! If you have suggestions or improvements, please fork 
 
 ## License
 
-PlatformChecker is released under the MIT license. See LICENSE for details.
+PlatformChecker is released under the MIT license. See [LICENSE](https://raw.githubusercontent.com/markbattistella/PlatformChecker/main/LICENCE) for details.
