@@ -3,9 +3,9 @@
 
 # PlatformChecker
 
-![Platforms](https://img.shields.io/badge/Platforms-iOS%2010+%20|%20macOS%2010.13+%20|%20Mac%20Catalyst%2013+%20|%20tvOS%2012+%20|%20visionOS%201+%20|%20watchOS%204+-white?labelColor=gray&style=flat)
+![Swift Versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fmarkbattistella%2FPlatformChecker%2Fbadge%3Ftype%3Dswift-versions)
 
-![Languages](https://img.shields.io/badge/Languages-Swift%20|%20SwiftUI%20|%20UIKit%20|%20AppKit-white?labelColor=orange&style=flat)
+![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fmarkbattistella%2FPlatformChecker%2Fbadge%3Ftype%3Dplatforms)
 
 ![Licence](https://img.shields.io/badge/Licence-MIT-white?labelColor=blue&style=flat)
 
