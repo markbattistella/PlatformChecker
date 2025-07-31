@@ -4,10 +4,10 @@
 // Website: https://markbattistella.com
 //
 
+import Foundation
+
 #if os(iOS)
 import UIKit
-#else
-import Foundation
 #endif
 
 /// `PlatformCheck` provides utilities for determining the operating system and device type
@@ -99,7 +99,7 @@ internal extension PlatformCheck {
 
 // MARK: - Device checks
 
-extension PlatformCheck {
+internal extension PlatformCheck {
 
     /// Determines if the current device is an iPhone, excluding Mac Catalyst.
     ///
@@ -162,7 +162,7 @@ extension PlatformCheck {
 
 // MARK: - Target environments
 
-extension PlatformCheck {
+internal extension PlatformCheck {
 
     /// Indicates if the app is running as a Mac Catalyst app.
     ///
@@ -216,4 +216,79 @@ extension PlatformCheck {
         let receiptPath = receiptURL.path.lowercased()
         return receiptPath.contains("sandboxreceipt") == false && receiptPath.contains("receipt")
     }
+}
+
+// MARK: - Interface Types
+
+internal extension PlatformCheck {
+
+    /// Returns `true` if running on OS 26+ and the app has not opted out of Liquid Glass UI.
+    static var isLiquidGlass: Bool {
+        if #available(
+            iOS 26.0,
+            macOS 26.0,
+            tvOS 26.0,
+            watchOS 26.0,
+            visionOS 26.0,
+            macCatalyst 26.0,
+            *
+        ) {
+            return !Bundle.main.isLiquidGlassDisabled
+        } else {
+            return false
+        }
+    }
+
+    /// Determines the current Liquid Glass feature status based on OS version and Info.plist
+    /// configuration.
+    ///
+    /// This property returns a `LiquidGlassStatus` enum that reflects whether the current platform
+    /// supports Liquid Glass and whether the app has opted out of using it. The logic is based on:
+    /// - OS version: Liquid Glass is only available on OS versions 26.0 and above.
+    /// - Info.plist key: If the `UIDesignRequiresCompatibility` key is set to `true`, the app is
+    /// considered opted out.
+    ///
+    /// - Returns:
+    ///   - `.enabled`: Liquid Glass is supported by the OS and the app has not opted out.
+    ///   - `.optedOut`: The OS supports Liquid Glass, but the app has opted out.
+    ///   - `.unavailable`: The OS does not support Liquid Glass (i.e. pre-26.0).
+    static var liquidGlassStatus: LiquidGlassStatus {
+        if #available(
+            iOS 26.0,
+            macOS 26.0,
+            tvOS 26.0,
+            watchOS 26.0,
+            visionOS 26.0,
+            macCatalyst 26.0,
+            *
+        ) {
+            return Bundle.main.isLiquidGlassDisabled ? .optedOut : .enabled
+        } else {
+            return .unavailable
+        }
+    }
+}
+
+// MARK: - User override
+
+fileprivate extension Bundle {
+
+    /// Checks whether the app has opted out of Liquid Glass by setting
+    /// `UIDesignRequiresCompatibility` to `true` in Info.plist.
+    var isLiquidGlassDisabled: Bool {
+        object(forInfoDictionaryKey: "UIDesignRequiresCompatibility") as? Bool ?? false
+    }
+}
+
+/// Represents the Liquid Glass feature state based on OS support and app configuration.
+public enum LiquidGlassStatus {
+
+    /// OS supports Liquid Glass and app has not opted out.
+    case enabled
+
+    /// OS supports Liquid Glass, but app opted out via Info.plist.
+    case optedOut
+
+    /// OS does not support Liquid Glass (pre-26).
+    case unavailable
 }

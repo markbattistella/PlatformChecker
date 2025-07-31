@@ -77,3 +77,28 @@ extension Platform {
     /// determine if it's distributed via TestFlight outside of the sandbox environment.
     public static var isTestFlight: Bool { PlatformCheck.isTestFlight }
 }
+
+// MARK: - Design
+
+extension Platform {
+
+    /// Describes the Liquid Glass availability and usage status for the current platform.
+    public static var liquidGlassStatus: LiquidGlassStatus {
+        PlatformCheck.liquidGlassStatus
+    }
+
+    /// `true` if Liquid Glass is supported by the OS and is currently enabled (i.e. not opted out).
+    public static var isUsingLiquidGlass: Bool {
+        liquidGlassStatus == .enabled
+    }
+
+    /// `true` if the OS supports Liquid Glass, but the app has opted out via Info.plist.
+    public static var hasOptedOutOfLiquidGlass: Bool {
+        liquidGlassStatus == .optedOut
+    }
+
+    /// `true` if the current platform does not support Liquid Glass (pre-OS 26).
+    public static var isLiquidGlassUnavailable: Bool {
+        liquidGlassStatus == .unavailable
+    }
+}
