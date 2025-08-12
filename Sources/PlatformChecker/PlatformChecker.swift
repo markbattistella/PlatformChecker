@@ -6,7 +6,7 @@
 
 import Foundation
 
-#if os(iOS)
+#if canImport(UIKit)
 import UIKit
 #endif
 
@@ -222,8 +222,8 @@ internal extension PlatformCheck {
 
 internal extension PlatformCheck {
 
-    /// Returns `true` if running on OS 26+ and the app has not opted out of Liquid Glass UI.
-    static var isLiquidGlass: Bool {
+    /// Returns `true` if running on OS version 26.0 or higher for any supported Apple platform.
+    static var isOS26OrNewer: Bool {
         if #available(
             iOS 26.0,
             macOS 26.0,
@@ -233,6 +233,16 @@ internal extension PlatformCheck {
             macCatalyst 26.0,
             *
         ) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+
+    /// Returns `true` if running on OS 26+ and the app has not opted out of Liquid Glass UI.
+    static var isLiquidGlass: Bool {
+        if isOS26OrNewer {
             return !Bundle.main.isLiquidGlassDisabled
         } else {
             return false
@@ -253,15 +263,7 @@ internal extension PlatformCheck {
     ///   - `.optedOut`: The OS supports Liquid Glass, but the app has opted out.
     ///   - `.unavailable`: The OS does not support Liquid Glass (i.e. pre-26.0).
     static var liquidGlassStatus: LiquidGlassStatus {
-        if #available(
-            iOS 26.0,
-            macOS 26.0,
-            tvOS 26.0,
-            watchOS 26.0,
-            visionOS 26.0,
-            macCatalyst 26.0,
-            *
-        ) {
+        if isOS26OrNewer {
             return Bundle.main.isLiquidGlassDisabled ? .optedOut : .enabled
         } else {
             return .unavailable

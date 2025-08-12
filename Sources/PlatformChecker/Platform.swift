@@ -6,7 +6,7 @@
 
 import Foundation
 
-/// `Platform` provides a structured and intuitive way to access environment-specific checks 
+/// `Platform` provides a structured and intuitive way to access environment-specific checks
 /// across different Apple platforms and configurations.
 public struct Platform {}
 
@@ -65,17 +65,32 @@ extension Platform {
 
 extension Platform {
 
-    /// Returns `true` if the app is running in a simulator. This can be useful for disabling 
+    /// Returns `true` if the app is running in a simulator. This can be useful for disabling
     /// certain features or using mock data when testing in the Xcode Simulator.
     public static var isSimulator: Bool { PlatformCheck.isSimulator }
 
-    /// Returns `true` if the current build configuration is set for debugging. This indicates 
+    /// Returns `true` if the current build configuration is set for debugging. This indicates
     /// that the `DEBUG` flag is active.
     public static var isDebugMode: Bool { PlatformCheck.isDebug }
 
-    /// Returns `true` if the app is running through TestFlight. Checks the app's receipt to 
+    /// Returns `true` if the app is running through TestFlight. Checks the app's receipt to
     /// determine if it's distributed via TestFlight outside of the sandbox environment.
     public static var isTestFlight: Bool { PlatformCheck.isTestFlight }
+}
+
+// MARK: - Versions
+
+extension Platform {
+
+    /// Indicates whether the current operating system version is **v26.0 or newer**.
+    ///
+    /// - Returns: `true` if the OS version is 26.0 or newer for the current platform.
+    public static var isiOS26OrNewer: Bool { PlatformCheck.isOS26OrNewer }
+
+    /// Indicates whether the current operating system version is **earlier than v26.0**.
+    ///
+    /// - Returns: `true` if the OS version is earlier than 26.0 for the current platform.
+    public static var isBeforeiOS26: Bool { !PlatformCheck.isOS26OrNewer }
 }
 
 // MARK: - Design
