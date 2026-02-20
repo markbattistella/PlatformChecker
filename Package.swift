@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.2
 
 import PackageDescription
 
@@ -22,7 +22,9 @@ let package = Package(
         .target(
             name: "PlatformChecker",
             dependencies: [],
-            exclude: [
+            exclude: [],
+            swiftSettings: [
+                .enableExperimentalFeature("StrictConcurrency")
             ]
         ),
         .testTarget(
