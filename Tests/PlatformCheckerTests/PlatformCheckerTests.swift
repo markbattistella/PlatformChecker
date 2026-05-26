@@ -4,88 +4,104 @@
 // Website: https://markbattistella.com
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import PlatformChecker
 
-final class PlatformCheckTests: XCTestCase {
+@Suite("PlatformChecker")
+struct PlatformCheckerTests {
 
-    /// Tests the `isiOS` property of `PlatformCheck`.
-    /// Asserts true if compiled for iOS (excluding Mac Catalyst), otherwise asserts false.
-    func testIsiOS() {
-        #if os(iOS) && !targetEnvironment(macCatalyst)
-        XCTAssertTrue(PlatformCheck.isiOS)
-        #else
-        XCTAssertFalse(PlatformCheck.isiOS)
-        #endif
-    }
+  @Test("OS checks match compilation platform")
+  func osChecksMatchCompilationPlatform() {
+    #if os(iOS) && !targetEnvironment(macCatalyst)
+      #expect(PlatformCheck.isiOS)
+    #else
+      #expect(!PlatformCheck.isiOS)
+    #endif
 
-    /// Tests the `isTVOS` property of `PlatformCheck`.
-    /// Asserts true if compiled for tvOS, otherwise asserts false.
-    func testIsTVOS() {
-        #if os(tvOS)
-        XCTAssertTrue(PlatformCheck.isTVOS)
-        #else
-        XCTAssertFalse(PlatformCheck.isTVOS)
-        #endif
-    }
+    #if os(tvOS)
+      #expect(PlatformCheck.isTVOS)
+    #else
+      #expect(!PlatformCheck.isTVOS)
+    #endif
 
-    /// Tests the `isMacOS` property of `PlatformCheck`.
-    /// Asserts true if compiled for macOS (excluding Mac Catalyst), otherwise asserts false.
-    func testIsMacOS() {
-        #if os(macOS) && !targetEnvironment(macCatalyst)
-        XCTAssertTrue(PlatformCheck.isMacOS)
-        #else
-        XCTAssertFalse(PlatformCheck.isMacOS)
-        #endif
-    }
+    #if os(macOS) && !targetEnvironment(macCatalyst)
+      #expect(PlatformCheck.isMacOS)
+    #else
+      #expect(!PlatformCheck.isMacOS)
+    #endif
 
-    /// Tests the `isWatchOS` property of `PlatformCheck`.
-    /// Asserts true if compiled for watchOS, otherwise asserts false.
-    func testIsWatchOS() {
-        #if os(watchOS)
-        XCTAssertTrue(PlatformCheck.isWatchOS)
-        #else
-        XCTAssertFalse(PlatformCheck.isWatchOS)
-        #endif
-    }
+    #if os(watchOS)
+      #expect(PlatformCheck.isWatchOS)
+    #else
+      #expect(!PlatformCheck.isWatchOS)
+    #endif
 
-    /// Tests the `isVisionOS` property of `PlatformCheck`.
-    /// Asserts true if compiled for visionOS, otherwise asserts false.
-    func testIsVisionOS() {
-        #if os(visionOS)
-        XCTAssertTrue(PlatformCheck.isVisionOS)
-        #else
-        XCTAssertFalse(PlatformCheck.isVisionOS)
-        #endif
-    }
+    #if os(visionOS)
+      #expect(PlatformCheck.isVisionOS)
+    #else
+      #expect(!PlatformCheck.isVisionOS)
+    #endif
+  }
 
-    /// Tests the `isMacCatalyst` property of `PlatformCheck`.
-    /// Asserts true if the environment is Mac Catalyst, otherwise asserts false.
-     func testIsMacCatalyst() {
-        #if targetEnvironment(macCatalyst)
-        XCTAssertTrue(PlatformCheck.isMacCatalyst)
-        #else
-        XCTAssertFalse(PlatformCheck.isMacCatalyst)
-        #endif
-    }
+  @Test("Target environment checks match compilation environment")
+  func targetEnvironmentChecksMatchCompilationEnvironment() {
+    #if targetEnvironment(macCatalyst)
+      #expect(PlatformCheck.isMacCatalyst)
+    #else
+      #expect(!PlatformCheck.isMacCatalyst)
+    #endif
 
-    /// Tests the `isSimulator` property of `PlatformCheck`.
-    /// Asserts true if the environment is a simulator, otherwise asserts false.
-    func testIsSimulator() {
-        #if targetEnvironment(simulator)
-        XCTAssertTrue(PlatformCheck.isSimulator)
-        #else
-        XCTAssertFalse(PlatformCheck.isSimulator)
-        #endif
-    }
+    #if targetEnvironment(simulator)
+      #expect(PlatformCheck.isSimulator)
+    #else
+      #expect(!PlatformCheck.isSimulator)
+    #endif
+  }
 
-    /// Tests the `isDebug` property of `PlatformCheck`.
-    /// Asserts true if the build configuration includes the DEBUG flag, otherwise asserts false.
-    func testIsDebug() {
-        #if DEBUG
-        XCTAssertTrue(PlatformCheck.isDebug)
-        #else
-        XCTAssertFalse(PlatformCheck.isDebug)
-        #endif
-    }
+  @Test("Debug flag check matches compilation configuration")
+  func debugFlagCheckMatchesCompilationConfiguration() {
+    #if DEBUG
+      #expect(PlatformCheck.isDebug)
+    #else
+      #expect(!PlatformCheck.isDebug)
+    #endif
+  }
+
+  @Test("TestFlight detection recognises sandbox receipts")
+  func testFlightDetectionRecognisesSandboxReceipts() {
+    let receiptURL = URL(
+      filePath: "/private/var/mobile/Containers/Bundle/Application/AppStoreReceipt/sandboxReceipt")
+
+    #expect(PlatformCheck.isTestFlightReceiptURL(receiptURL))
+  }
+
+  @Test("TestFlight detection rejects App Store receipts")
+  func testFlightDetectionRejectsAppStoreReceipts() {
+    let receiptURL = URL(
+      filePath: "/private/var/mobile/Containers/Bundle/Application/AppStoreReceipt/receipt")
+
+    #expect(!PlatformCheck.isTestFlightReceiptURL(receiptURL))
+  }
+
+  @Test("TestFlight detection is case-sensitive")
+  func testFlightDetectionIsCaseSensitive() {
+    let receiptURL = URL(
+      filePath: "/private/var/mobile/Containers/Bundle/Application/AppStoreReceipt/SandboxReceipt")
+
+    #expect(!PlatformCheck.isTestFlightReceiptURL(receiptURL))
+  }
+
+  @Test("Public Platform facade forwards core environment checks")
+  func publicFacadeForwardsCoreEnvironmentChecks() {
+    #expect(Platform.isiOS == PlatformCheck.isiOS)
+    #expect(Platform.isTVOS == PlatformCheck.isTVOS)
+    #expect(Platform.isMacOS == PlatformCheck.isMacOS)
+    #expect(Platform.isWatchOS == PlatformCheck.isWatchOS)
+    #expect(Platform.isVisionOS == PlatformCheck.isVisionOS)
+    #expect(Platform.isMacCatalyst == PlatformCheck.isMacCatalyst)
+    #expect(Platform.isSimulator == PlatformCheck.isSimulator)
+    #expect(Platform.isDebugMode == PlatformCheck.isDebug)
+  }
 }

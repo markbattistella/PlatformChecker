@@ -18,6 +18,12 @@
 - **Platform Checks:** Quickly determine which Apple platform your application is currently running on (iOS, macOS, watchOS, tvOS, visionOS).
 - **Device Checks:** Easily identify device types such as iPhone, iPad, and Vision devices.
 - **Environment Checks:** Check if your app is running as a Mac Catalyst app, in a simulator, or through TestFlight, and whether it's in debug mode.
+- **Version and Design Checks:** Detect OS 26+ availability and Liquid Glass opt-out status.
+
+## Requirements
+
+- Swift 6.0+
+- iOS 12+, macOS 10.13+, Mac Catalyst 13+, tvOS 12+, watchOS 4+, visionOS 1+
 
 ## Installation
 
@@ -29,7 +35,7 @@ You can add PlatformChecker to your project via Swift Package Manager. Add the f
 dependencies: [
     .package(
         url: "https://github.com/markbattistella/PlatformChecker.git",
-         from: "1.0.0"
+        from: "26.2.21"
     )
 ]
 ```
@@ -62,6 +68,8 @@ if Platform.isDebugMode {
 
 These checks can be used to conditionally apply logic or configurations based on the operating system, device type, or runtime environment.
 
+Device idiom checks that read UIKit's `UIDevice.current.userInterfaceIdiom` are main-actor isolated under Swift 6.
+
 ## Properties
 
 | Property           | Description                                                               |
@@ -79,6 +87,12 @@ These checks can be used to conditionally apply logic or configurations based on
 | `Platform.isSimulator`| Returns `true` if the app is running in a simulator.                      |
 | `Platform.isDebugMode`| Returns `true` if the current build configuration is set for debugging.   |
 | `Platform.isTestFlight`| Returns `true` if the app is running through TestFlight.                 |
+| `Platform.isiOS26OrNewer`| Returns `true` if the current OS is version 26.0 or newer.             |
+| `Platform.isBeforeiOS26`| Returns `true` if the current OS is earlier than version 26.0.           |
+| `Platform.liquidGlassStatus`| Returns `.enabled`, `.optedOut`, or `.unavailable`.               |
+| `Platform.isUsingLiquidGlass`| Returns `true` when Liquid Glass is available and not opted out.    |
+| `Platform.hasOptedOutOfLiquidGlass`| Returns `true` when the app opted out of Liquid Glass.       |
+| `Platform.isLiquidGlassUnavailable`| Returns `true` when the current OS does not support Liquid Glass. |
 
 ## Documentation
 
@@ -90,4 +104,4 @@ Contributions are welcome! If you have suggestions or improvements, please fork 
 
 ## License
 
-PlatformChecker is released under the MIT license. See [LICENSE](https://raw.githubusercontent.com/markbattistella/PlatformChecker/main/LICENCE) for details.
+PlatformChecker is released under the MIT license. See [LICENCE](https://raw.githubusercontent.com/markbattistella/PlatformChecker/main/LICENCE) for details.
