@@ -5,12 +5,12 @@ import PackageDescription
 let package = Package(
   name: "PlatformChecker",
   platforms: [
-    .iOS(.v12),
-    .macOS(.v10_13),
-    .macCatalyst(.v13),
-    .tvOS(.v12),
+    .iOS(.v15),
+    .macOS(.v12),
+    .macCatalyst(.v15),
+    .tvOS(.v15),
     .visionOS(.v1),
-    .watchOS(.v4),
+    .watchOS(.v9),
   ],
   products: [
     .library(
