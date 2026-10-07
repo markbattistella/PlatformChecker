@@ -36,4 +36,4 @@ jobs:
           SDKROOT=$(xcrun --sdk iphonesimulator --show-sdk-path)
           swift build \
             --sdk "$SDKROOT" \
-            --triple arm64-apple-ios12.0-simulator
+            --triple arm64-apple-ios15.0-simulator

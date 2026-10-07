@@ -23,7 +23,7 @@
 ## Requirements
 
 - Swift 6.0+
-- iOS 12+, macOS 10.13+, Mac Catalyst 13+, tvOS 12+, watchOS 4+, visionOS 1+
+- iOS 15+, macOS 12+, Mac Catalyst 15+, tvOS 15+, watchOS 9+, visionOS 1+
 
 ## Installation
 
@@ -72,28 +72,28 @@ Device idiom checks that read UIKit's `UIDevice.current.userInterfaceIdiom` are 
 
 ## Properties
 
-| Property           | Description                                                               |
-|--------------------|---------------------------------------------------------------------------|
-| `Platform.isiOS`   | Returns `true` if running on iOS, excluding Mac Catalyst apps.            |
-| `Platform.isTVOS`  | Returns `true` if running on tvOS.                                        |
-| `Platform.isMacOS` | Returns `true` if running on macOS, excluding Mac Catalyst apps.          |
-| `Platform.isWatchOS`| Returns `true` if running on watchOS.                                     |
-| `Platform.isVisionOS`| Returns `true` if running on visionOS, specific to Apple's Vision Pro devices. |
-| `Platform.isiPhone`| Returns `true` if the device is an iPhone, excluding Mac Catalyst.        |
-| `Platform.isDuo`   | Returns `true` if the device is an iPhone Duo, excluding Mac Catalyst.    |
-| `Platform.isiPad`  | Returns `true` if the device is an iPad, excluding Mac Catalyst.          |
-| `Platform.isTV`    | Returns `true` if the device is identified as a TV.                       |
-| `Platform.isVisionDevice`| Returns `true` if the device is a Vision device, specific to visionOS.  |
-| `Platform.isMacCatalyst`| Returns `true` if the app is running as a Mac Catalyst app.              |
-| `Platform.isSimulator`| Returns `true` if the app is running in a simulator.                      |
-| `Platform.isDebugMode`| Returns `true` if the current build configuration is set for debugging.   |
-| `Platform.isTestFlight`| Returns `true` if the app is running through TestFlight.                 |
-| `Platform.isiOS26OrNewer`| Returns `true` if the current OS is version 26.0 or newer.             |
-| `Platform.isBeforeiOS26`| Returns `true` if the current OS is earlier than version 26.0.           |
-| `Platform.liquidGlassStatus`| Returns `.enabled`, `.optedOut`, or `.unavailable`.               |
-| `Platform.isUsingLiquidGlass`| Returns `true` when Liquid Glass is available and not opted out.    |
-| `Platform.hasOptedOutOfLiquidGlass`| Returns `true` when the app opted out of Liquid Glass.       |
-| `Platform.isLiquidGlassUnavailable`| Returns `true` when the current OS does not support Liquid Glass. |
+| Property                            | Description                                                                    |
+|-------------------------------------|--------------------------------------------------------------------------------|
+| `Platform.isiOS`                    | Returns `true` if running on iOS, excluding Mac Catalyst apps.                 |
+| `Platform.isTVOS`                   | Returns `true` if running on tvOS.                                             |
+| `Platform.isMacOS`                  | Returns `true` if running on macOS, excluding Mac Catalyst apps.               |
+| `Platform.isWatchOS`                | Returns `true` if running on watchOS.                                          |
+| `Platform.isVisionOS`               | Returns `true` if running on visionOS, specific to Apple's Vision Pro devices. |
+| `Platform.isiPhone`                 | Returns `true` if the device is an iPhone, excluding Mac Catalyst.             |
+| `Platform.isDuo`                    | Returns `true` if the device is an iPhone Duo, excluding Mac Catalyst.         |
+| `Platform.isiPad`                   | Returns `true` if the device is an iPad, excluding Mac Catalyst.               |
+| `Platform.isTV`                     | Returns `true` if the device is identified as a TV.                            |
+| `Platform.isVisionDevice`           | Returns `true` if the device is a Vision device, specific to visionOS.         |
+| `Platform.isMacCatalyst`            | Returns `true` if the app is running as a Mac Catalyst app.                    |
+| `Platform.isSimulator`              | Returns `true` if the app is running in a simulator.                           |
+| `Platform.isDebugMode`              | Returns `true` if the current build configuration is set for debugging.        |
+| `Platform.isTestFlight`             | Returns `true` if the app is running through TestFlight.                       |
+| `Platform.isiOS26OrNewer`           | Returns `true` if the current OS is version 26.0 or newer.                     |
+| `Platform.isBeforeiOS26`            | Returns `true` if the current OS is earlier than version 26.0.                 |
+| `Platform.liquidGlassStatus`        | Returns `.enabled`, `.optedOut`, or `.unavailable`.                            |
+| `Platform.isUsingLiquidGlass`       | Returns `true` when Liquid Glass is available and not opted out.               |
+| `Platform.hasOptedOutOfLiquidGlass` | Returns `true` when the app opted out of Liquid Glass.                         |
+| `Platform.isLiquidGlassUnavailable` | Returns `true` when the current OS does not support Liquid Glass.              |
 
 ## Documentation
 
