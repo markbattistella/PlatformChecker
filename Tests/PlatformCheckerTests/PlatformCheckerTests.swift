@@ -103,5 +103,32 @@ struct PlatformCheckerTests {
     #expect(Platform.isMacCatalyst == PlatformCheck.isMacCatalyst)
     #expect(Platform.isSimulator == PlatformCheck.isSimulator)
     #expect(Platform.isDebugMode == PlatformCheck.isDebug)
+    #expect(Platform.isDuo == PlatformCheck.isDuo)
+  }
+
+  @MainActor
+  @Test("Device checks are mutually exclusive")
+  func deviceChecksAreMutuallyExclusive() {
+    let devices = [Platform.isiPhone, Platform.isiPad, Platform.isTV, Platform.isVisionDevice]
+    #expect(devices.filter { $0 }.count <= 1)
+    if Platform.isDuo { #expect(Platform.isiPhone) }
+  }
+}
+
+@Suite("Foldable checks")
+struct FoldableCheckTests {
+
+  @Test("Duo model identifiers are recognised")
+  func duoModelIdentifiers() {
+    #expect(PlatformCheck.isDuoModelIdentifier("iPhone19,4"))
+    #expect(!PlatformCheck.isDuoModelIdentifier("iPhone17,1"))
+    #expect(!PlatformCheck.isDuoModelIdentifier(""))
+  }
+
+  @Test("isDuo is false outside iOS")
+  func duoFalseOutsideIOS() {
+    #if !os(iOS) || targetEnvironment(macCatalyst)
+      #expect(!PlatformCheck.isDuo)
+    #endif
   }
 }

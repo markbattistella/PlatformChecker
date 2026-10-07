@@ -44,6 +44,11 @@ extension Platform {
   @MainActor
   public static var isiPhone: Bool { PlatformCheck.isPhone }
 
+  /// Returns `true` if the current device is an iPhone Duo, excluding Mac Catalyst. Detected
+  /// from the hardware model, so it is also `true` in the iPhone Duo simulator. Intended for
+  /// device-specific behaviour; use size classes and scene geometry for layout decisions.
+  public static var isDuo: Bool { PlatformCheck.isDuo }
+
   /// Returns `true` if the current device is an iPad, excluding Mac Catalyst. Useful for
   /// tailoring experiences to take advantage of iPad's larger screen and capabilities.
   @MainActor

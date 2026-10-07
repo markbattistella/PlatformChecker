@@ -16,7 +16,7 @@
 ## Features
 
 - **Platform Checks:** Quickly determine which Apple platform your application is currently running on (iOS, macOS, watchOS, tvOS, visionOS).
-- **Device Checks:** Easily identify device types such as iPhone, iPad, and Vision devices.
+- **Device Checks:** Easily identify device types such as iPhone, iPhone Duo, iPad, and Vision devices.
 - **Environment Checks:** Check if your app is running as a Mac Catalyst app, in a simulator, or through TestFlight, and whether it's in debug mode.
 - **Version and Design Checks:** Detect OS 26+ availability and Liquid Glass opt-out status.
 
@@ -80,6 +80,7 @@ Device idiom checks that read UIKit's `UIDevice.current.userInterfaceIdiom` are 
 | `Platform.isWatchOS`| Returns `true` if running on watchOS.                                     |
 | `Platform.isVisionOS`| Returns `true` if running on visionOS, specific to Apple's Vision Pro devices. |
 | `Platform.isiPhone`| Returns `true` if the device is an iPhone, excluding Mac Catalyst.        |
+| `Platform.isDuo`   | Returns `true` if the device is an iPhone Duo, excluding Mac Catalyst.    |
 | `Platform.isiPad`  | Returns `true` if the device is an iPad, excluding Mac Catalyst.          |
 | `Platform.isTV`    | Returns `true` if the device is identified as a TV.                       |
 | `Platform.isVisionDevice`| Returns `true` if the device is a Vision device, specific to visionOS.  |

@@ -164,6 +164,53 @@ extension PlatformCheck {
   }
 }
 
+// MARK: - Foldable checks
+
+extension PlatformCheck {
+
+  /// Model identifiers that belong to iPhone Duo.
+  private static let duoModelIdentifiers: Set<String> = ["iPhone19,4"]
+
+  /// Determines if the current device is an iPhone Duo, excluding Mac Catalyst.
+  ///
+  /// This reads the hardware model identifier, not the user interface idiom or screen
+  /// dimensions, because iPhone Duo reports itself as an iPhone and changes size as it
+  /// opens and closes. Use it for device-specific behaviour, not for layout decisions.
+  /// Use size classes and scene geometry for layout.
+  ///
+  /// - Returns: `true` if the device is an iPhone Duo (or its simulator), otherwise `false`.
+  static var isDuo: Bool { _isDuo }
+
+  /// The hardware never changes at runtime, so the model lookup runs once.
+  private static let _isDuo: Bool = {
+    #if os(iOS) && !targetEnvironment(macCatalyst)
+      return isDuoModelIdentifier(modelIdentifier)
+    #else
+      return false
+    #endif
+  }()
+
+  /// Returns whether a hardware model identifier represents an iPhone Duo.
+  static func isDuoModelIdentifier(_ identifier: String) -> Bool {
+    duoModelIdentifiers.contains(identifier)
+  }
+
+  #if os(iOS) && !targetEnvironment(macCatalyst)
+    /// The hardware model identifier, resolving the simulated device when in a Simulator.
+    private static var modelIdentifier: String {
+      #if targetEnvironment(simulator)
+        return ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"] ?? ""
+      #else
+        var size = 0
+        guard sysctlbyname("hw.machine", nil, &size, nil, 0) == 0, size > 0 else { return "" }
+        var buffer = [CChar](repeating: 0, count: size)
+        guard sysctlbyname("hw.machine", &buffer, &size, nil, 0) == 0 else { return "" }
+        return String(cString: buffer)
+      #endif
+    }
+  #endif
+}
+
 // MARK: - Target environments
 
 extension PlatformCheck {
