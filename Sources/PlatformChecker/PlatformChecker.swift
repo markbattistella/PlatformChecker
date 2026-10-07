@@ -271,29 +271,14 @@ extension PlatformCheck {
   }
 }
 
-// MARK: - Interface Types
+// MARK: - Versions and design
 
 extension PlatformCheck {
 
   /// Returns `true` if running on OS version 26.0 or higher for any supported Apple platform.
   static var isOS26OrNewer: Bool {
-    if #available(iOS 26.0,
-    macOS 26.0,
-    tvOS 26.0,
-    watchOS 26.0,
-    visionOS 26.0,
-    macCatalyst 26.0,
-    *) {
+    if #available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, visionOS 26.0, macCatalyst 26.0, *) {
       return true
-    } else {
-      return false
-    }
-  }
-
-  /// Returns `true` if running on OS 26+ and the app has not opted out of Liquid Glass UI.
-  static var isLiquidGlass: Bool {
-    if isOS26OrNewer {
-      return !Bundle.main.isLiquidGlassDisabled
     } else {
       return false
     }

@@ -106,6 +106,20 @@ struct PlatformCheckerTests {
     #expect(Platform.isDuo == PlatformCheck.isDuo)
   }
 
+  @Test("Version and Liquid Glass checks are consistent")
+  func versionAndLiquidGlassChecksAreConsistent() {
+    #expect(Platform.isiOS26OrNewer != Platform.isBeforeiOS26)
+
+    switch Platform.liquidGlassStatus {
+    case .enabled:
+      #expect(Platform.isUsingLiquidGlass)
+    case .optedOut:
+      #expect(Platform.hasOptedOutOfLiquidGlass)
+    case .unavailable:
+      #expect(Platform.isLiquidGlassUnavailable)
+    }
+  }
+
   @MainActor
   @Test("Device checks are mutually exclusive")
   func deviceChecksAreMutuallyExclusive() {
